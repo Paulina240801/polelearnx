@@ -3,25 +3,15 @@ from django.db import models
 
 
 class User(AbstractUser):
-    is_student = models.BooleanField(default=False)
-    is_teacher = models.BooleanField(default=False)
+    pass
 
 
 class Student(User):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
-    is_student = models.BooleanField(default=True)
-
-    def __str__(self):
-        return self.user.username
+    pass
 
 
 class Teacher(User):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
-    is_teacher = models.BooleanField(default=True)
     students = models.ManyToManyField(Student)
-
-    def __str__(self):
-        return self.user.username
 
 
 class TestTemplate(models.Model):
