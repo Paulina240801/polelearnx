@@ -32,7 +32,7 @@ class QuestionTemplate(models.Model):
 
 
 class Question(models.Model):
-    test_template = models.ForeignKey(QuestionTemplate, on_delete=models.CASCADE)
+    question_template = models.ForeignKey(QuestionTemplate, on_delete=models.CASCADE)
     test = models.ForeignKey(Test, on_delete=models.CASCADE)
 
 
