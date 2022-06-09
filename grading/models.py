@@ -3,7 +3,8 @@ from django.db import models
 
 
 class User(AbstractUser):
-    pass
+    first_name = models.TextField()
+    last_name = models.TextField()
 
 
 class Student(User):
@@ -11,7 +12,7 @@ class Student(User):
 
 
 class Teacher(User):
-    students = models.ManyToManyField(Student)
+    students = models.ManyToManyField(Student, blank=True)
 
 
 class TestTemplate(models.Model):
@@ -24,11 +25,18 @@ class Test(models.Model):
     student = models.ForeignKey(Student, on_delete=models.CASCADE)
 
 
-class Question(models.Model):
-    test = models.ForeignKey(TestTemplate, on_delete=models.CASCADE)
+class QuestionTemplate(models.Model):
+    test_template = models.ForeignKey(TestTemplate, on_delete=models.CASCADE)
+    text = models.TextField()
     expected_value = models.TextField()
 
 
+class Question(models.Model):
+    test_template = models.ForeignKey(QuestionTemplate, on_delete=models.CASCADE)
+    test = models.ForeignKey(Test, on_delete=models.CASCADE)
+
+
 class Answer(models.Model):
-    question = models.ForeignKey(Question, on_delete=models.CASCADE)
     value = models.TextField()
+    answer = models.OneToOneField(Question, on_delete=models.CASCADE, null=True, blank=True)
+
